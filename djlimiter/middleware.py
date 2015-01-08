@@ -7,6 +7,8 @@ from limits.storage import storage_from_string
 from limits.strategies import STRATEGIES
 from limits.errors import ConfigurationError
 from limits.util import parse_many
+import six
+
 from .decorators import DECORATED, EXEMPT
 from .util import get_ipaddr, LimitWrapper, BlackHoleHandler
 
@@ -60,7 +62,7 @@ class Limiter(object):
         self.logger = logging.getLogger("djlimiter")
         self.logger.addHandler(BlackHoleHandler())
 
-        if isinstance(callback, basestring):
+        if isinstance(callback, six.string_types):
             mod, _, name = callback.rpartition(".")
             try:
                 self.callback = getattr(importlib.import_module(mod), name)
