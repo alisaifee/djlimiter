@@ -6,10 +6,10 @@ Rate limiting middleware for Django applications
 .. toctree::
     :hidden:
 
-    decorators
-    string-notation
-    strategy
     config
+    string-notation
+    decorators
+    strategy
     api
 
 
