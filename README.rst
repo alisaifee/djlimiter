@@ -12,7 +12,7 @@ djlimiter
 *********
 |travis-ci| |coveralls| |pypi| |license|
 
-djlimiter provides rate limiting features to django via as middleware.
+djlimiter provides rate limiting features to django via a middleware.
 
 Quickstart
 ===========
