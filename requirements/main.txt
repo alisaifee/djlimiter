@@ -1,0 +1,3 @@
+limits
+Django
+six>=1.4.1
