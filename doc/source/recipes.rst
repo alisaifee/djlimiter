@@ -49,3 +49,27 @@ described in :ref:`django:decorating-class-based-views`).
  the ``per_method`` keyword argument to :meth:`limit`).
 
 
+Logging
+-------
+djlimiter uses standard python logging. To enable logging, configure the ``djlimiter`` logger
+in your ``settings.py``.::
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'stream': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+            },
+        },
+        'loggers': {
+            'djlimiter': {
+                'handlers': ['stream'],
+                'level': 'INFO',
+                'propagate': True,
+            },
+        },
+    }
+
+For more details about configuring django logging refer to :ref:`django:configuring-logging`

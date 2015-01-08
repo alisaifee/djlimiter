@@ -68,7 +68,8 @@ class Limiter(object):
                 self.callback = getattr(importlib.import_module(mod), name)
             except AttributeError:
                 self.logger.error(
-                    "Unable to load callback function %s. Rate limiting disabled" % callback
+                    "Unable to load callback function %s. Rate limiting disabled",
+                    callback
                 )
                 self.enabled = False
         else:
@@ -107,6 +108,7 @@ class Limiter(object):
             if lim.per_method:
                 limit_scope += ":%s" % request.method
             if not self.limiter.hit(cur_limit, (lim.key_func or self.key_function)(request), limit_scope):
+                self.logger.info("Rate limit exceeded for %s (%s)", name, cur_limit)
                 failed_limit = cur_limit
                 limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
 
