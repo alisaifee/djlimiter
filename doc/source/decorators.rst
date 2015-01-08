@@ -28,7 +28,7 @@ instance are
            @limit("100/day")
            @limit("10/hour")
            @limit("1/minute")
-           def my_view():
+           def my_view(request):
              ...
 
   Custom keying function
@@ -45,21 +45,23 @@ instance are
               ...
 
         .. note:: The key function must accept one argument which is a :class:`django.http.HttpRequest` object
+
   Dynamically loaded limit string(s)
     There may be situations where the rate limits need to be retrieved from
     sources external to the code (database, remote api, etc...). This can be
-    achieved by providing a callable to the decorator.
+    achieved by providing a callable (which takes a single parameter - the :class:`django.http.HttpRequest` object)
+    to the decorator. The callable should return a rate limit string in the :ref:`ratelimit-string`.
 
 
         .. code-block:: python
 
                from django.conf import settings
 
-               def rate_limit_from_config():
+               def rate_limit_from_config(request):
                    return settings.CUSTOM_LIMIT
 
                @limit(rate_limit_from_config)
-               def my_view():
+               def my_view(request):
                    ...
 
         .. danger:: The provided callable will be called for every request
@@ -80,11 +82,11 @@ instance are
         mysql_limit = shared_limit("100/hour", scope="mysql")
 
         @mysql_limit
-        def my_view_1():
+        def my_view_1(request):
            ...
 
         @mysql_limit
-        def my_view_2():
+        def my_view_2(request):
            ...
 
 
