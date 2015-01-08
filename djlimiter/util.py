@@ -1,5 +1,6 @@
 import logging
 from django.core.urlresolvers import resolve
+from limits.util import parse
 
 
 def get_ipaddr(request):
@@ -24,8 +25,8 @@ class LimitWrapper(object):
         self._scope = scope
         self.per_method = per_method
 
-    def get_limit(self):
-        return self._limit() if callable(self._limit) else self._limit
+    def get_limit(self, request):
+        return parse(self._limit(request)) if callable(self._limit) else self._limit
 
     def get_scope(self, request):
         return (

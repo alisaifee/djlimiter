@@ -99,13 +99,14 @@ class Limiter(object):
         failed_limit = None
         for lim in limits:
             limit_scope = lim.get_scope(request) or name
-            if not limit_for_header or lim.get_limit() < limit_for_header[0]:
-                limit_for_header = (lim.get_limit(), (lim.key_func or self.key_function)(request), limit_scope)
+            cur_limit = lim.get_limit(request)
+            if not limit_for_header or cur_limit < limit_for_header[0]:
+                limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
             if lim.per_method:
                 limit_scope += ":%s" % request.method
-            if not self.limiter.hit(lim.get_limit(), (lim.key_func or self.key_function)(request), limit_scope):
-                failed_limit = lim.get_limit()
-                limit_for_header = (lim.get_limit(), (lim.key_func or self.key_function)(request), limit_scope)
+            if not self.limiter.hit(cur_limit, (lim.key_func or self.key_function)(request), limit_scope):
+                failed_limit = cur_limit
+                limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
 
         request.view_rate_limit = limit_for_header
         if failed_limit:

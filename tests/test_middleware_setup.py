@@ -28,4 +28,9 @@ class MiddlewareSetupTests(TestCase):
                 self.assertEqual(limiter().process_request.call_count, 2)
                 self.assertEqual(self.client.get("/basic/two/").status_code, 429)
                 self.assertEqual(limiter().process_request.call_count, 3)
+                self.assertEqual(self.client.get("/basic/four/").status_code, 200)
+                self.assertEqual(self.client.get("/basic/four/").status_code, 200)
+                self.assertEqual(self.client.get("/basic/four/").status_code, 200)
+                self.assertEqual(self.client.get("/basic/four/").status_code, 429)
+
 

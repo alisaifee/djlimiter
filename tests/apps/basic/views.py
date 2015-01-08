@@ -13,3 +13,11 @@ def two(_):
 @require_http_methods(["GET"])
 def three(_):
     return HttpResponse("three")
+
+
+def func(_):
+    return "3/second"
+
+@limit(func)
+def four(_):
+    return HttpResponse("four")
