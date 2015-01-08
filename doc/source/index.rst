@@ -1,6 +1,7 @@
 
 djlimiter
 ---------
+Rate limiting middleware for Django applications
 
 .. toctree::
     :hidden:
