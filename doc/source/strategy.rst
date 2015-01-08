@@ -3,10 +3,9 @@
 Rate limiting strategies
 ------------------------
 djlimiter comes with three different rate limiting strategies built-in. Pick
-the one that works for your use-case by specifying it in your flask config as
+the one that works for your use-case by specifying it in your django settings as
 ``RATELIMIT_STRATEGY`` (one of ``fixed-window``, ``fixed-window-elastic-expiry``,
-or ``moving-window``), or as a constructor keyword argument. The default
-configuration is ``fixed-window``.
+or ``moving-window``). The default configuration is ``fixed-window``.
 
 
 Fixed Window
