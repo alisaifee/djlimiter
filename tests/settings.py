@@ -16,7 +16,7 @@ INSTALLED_APPS = (
     'django_nose',
 )
 for dir in os.listdir("tests/apps"):
-    if os.path.isdir("tests/apps/%s" % dir):
+    if os.path.isfile("tests/apps/%s/urls.py" % dir):
         INSTALLED_APPS += ( "tests.apps.%s" % dir, )
 
 
