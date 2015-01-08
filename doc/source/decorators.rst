@@ -3,6 +3,8 @@ Decorators
 The decorators made available as instance methods of the :class:`Limiter`
 instance are
 
+.. currentmodule:: djlimiter
+
 .. _ratelimit-decorator-limit:
 
 :meth:`limit`
@@ -13,8 +15,7 @@ instance are
 
       .. code-block:: python
 
-         @app.route("....")
-         @limiter.limit("100/day;10/hour;1/minute")
+         @limit("100/day;10/hour;1/minute")
          def my_view(request)
            ...
 
@@ -24,10 +25,9 @@ instance are
 
         .. code-block:: python
 
-           @app.route("....")
-           @limiter.limit("100/day")
-           @limiter.limit("10/hour")
-           @limiter.limit("1/minute")
+           @limit("100/day")
+           @limit("10/hour")
+           @limit("1/minute")
            def my_view():
              ...
 
@@ -40,8 +40,7 @@ instance are
             def my_key_func(request):
               ...
 
-            @app.route("...")
-            @limiter.limit("100/day", my_key_func)
+            @limit("100/day", my_key_func)
             def my_view(request):
               ...
 
@@ -59,8 +58,7 @@ instance are
                def rate_limit_from_config():
                    return settings.CUSTOM_LIMIT
 
-               @app.route("...")
-               @limiter.limit(rate_limit_from_config)
+               @limit(rate_limit_from_config)
                def my_view():
                    ...
 
