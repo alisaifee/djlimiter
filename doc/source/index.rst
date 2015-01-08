@@ -10,6 +10,7 @@ Rate limiting middleware for Django applications
     string-notation
     decorators
     strategy
+    recipes
     api
 
 
@@ -51,8 +52,7 @@ The above example will result in the following characteristics being applied to 
 Every time a request exceeds the rate limit, the view function will not get called and instead
 a `429 <http://tools.ietf.org/html/rfc6585#section-4>`_ http error will be raised.
 
-
-
+Refer to :ref:`recipes` for more examples.
 
 References
 ----------
