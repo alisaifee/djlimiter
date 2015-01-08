@@ -3,6 +3,6 @@ __version__ = get_versions()['version']
 del get_versions
 
 from .middleware import Limiter
-from .decorators import limit, exempt
+from .decorators import limit, exempt, shared_limit
 from .errors import RateLimitExceeded
 

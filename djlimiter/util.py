@@ -19,7 +19,7 @@ class LimitWrapper(object):
     """
     basic wrapper to encapsulate limits and their context
     """
-    def __init__(self, limit, key_func, scope, per_method):
+    def __init__(self, limit, key_func, scope, per_method=False):
         self._limit = limit
         self.key_func = key_func
         self._scope = scope
