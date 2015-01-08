@@ -13,7 +13,7 @@ class MiddlewareSetupTests(TestCase):
                 RATELIMIT_GLOBAL = "2/second"
         ):
             with mock.patch("djlimiter.Limiter", wraps = djlimiter.Limiter) as limiter:
-                self.assertEqual(self.client.get("/simple/one/").status_code, 200)
+                self.assertEqual(self.client.get("/basic/one/").status_code, 200)
                 self.assertEqual(limiter.call_count, 1)
 
     def test_middleware_initialized(self):
@@ -23,8 +23,9 @@ class MiddlewareSetupTests(TestCase):
         ):
             with mock.patch("djlimiter.Limiter", wraps = djlimiter.Limiter) as limiter:
                 limiter.return_value = mock.Mock(wraps=djlimiter.Limiter())
-                self.assertEqual(self.client.get("/simple/two/").status_code, 200)
-                self.assertEqual(self.client.get("/simple/two/").status_code, 200)
+                self.assertEqual(self.client.get("/basic/two/").status_code, 200)
+                self.assertEqual(self.client.get("/basic/two/").status_code, 200)
                 self.assertEqual(limiter().process_request.call_count, 2)
-                self.assertEqual(self.client.get("/simple/two/").status_code, 429)
+                self.assertEqual(self.client.get("/basic/two/").status_code, 429)
                 self.assertEqual(limiter().process_request.call_count, 3)
+

@@ -1,5 +1,5 @@
 from django.conf.urls import patterns
-urlpatterns = patterns('tests.apps.simple.views',
+urlpatterns = patterns('tests.apps.basic.views',
     (r'^one/', 'one'),
     (r'^two/', 'two'),
     (r'^three/', 'three'),

@@ -1,3 +1,4 @@
+import logging
 from django.core.urlresolvers import resolve
 
 
@@ -15,7 +16,7 @@ def get_ipaddr(request):
 
 class LimitWrapper(object):
     """
-    simple wrapper to encapsulate limits and their context
+    basic wrapper to encapsulate limits and their context
     """
     def __init__(self, limit, key_func, scope, per_method):
         self._limit = limit
@@ -32,3 +33,6 @@ class LimitWrapper(object):
                 self._scope if self._scope else resolve(request.path).url_name
             )
         )
+class BlackHoleHandler(logging.StreamHandler):
+    def emit(*_):
+        return

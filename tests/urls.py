@@ -1,6 +1,13 @@
 from django.conf.urls import patterns, include
+import os
 
-urlpatterns = patterns('',
-   (r'^simple/', include('tests.apps.simple.urls')),
+
+app_urls = []
+for dir in os.listdir("tests/apps"):
+   if os.path.isdir("tests/apps/%s" % dir):
+      app_urls += [(r'^%s/' % dir, include("tests.apps.%s.urls" % dir)),]
+
+urlpatterns = patterns(
+   '',
+   *app_urls
 )
-
