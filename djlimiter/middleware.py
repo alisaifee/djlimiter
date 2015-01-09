@@ -51,8 +51,8 @@ class Limiter(object):
         if conf_limits:
             self.global_limits = [
                 LimitWrapper(
-                    limit, self.key_function, None, False
-                ) for limit in parse_many(conf_limits)
+                    list(parse_many(conf_limits)), self.key_function, None, False
+                )
             ]
         self.header_mapping = {
             HEADERS.RESET : getattr(settings,C.HEADER_RESET, "X-RateLimit-Reset"),
@@ -102,15 +102,16 @@ class Limiter(object):
         failed_limit = None
         for lim in limits:
             limit_scope = lim.get_scope(request) or name
-            cur_limit = lim.get_limit(request)
-            if not limit_for_header or cur_limit < limit_for_header[0]:
-                limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
-            if lim.per_method:
-                limit_scope += ":%s" % request.method
-            if not self.limiter.hit(cur_limit, (lim.key_func or self.key_function)(request), limit_scope):
-                self.logger.info("Rate limit exceeded for %s (%s)", name, cur_limit)
-                failed_limit = cur_limit
-                limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
+            cur_limits = lim.get_limits(request)
+            for cur_limit in cur_limits:
+                if not limit_for_header or cur_limit < limit_for_header[0]:
+                    limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
+                if lim.per_method:
+                    limit_scope += ":%s" % request.method
+                if not self.limiter.hit(cur_limit, (lim.key_func or self.key_function)(request), limit_scope):
+                    self.logger.info("Rate limit exceeded for %s (%s)", name, cur_limit)
+                    failed_limit = cur_limit
+                    limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
 
         request.view_rate_limit = limit_for_header
         if failed_limit:

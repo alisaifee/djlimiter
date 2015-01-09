@@ -20,6 +20,8 @@ def limit(limit_value, key_function=None, per_method=False):
         @wraps(fn)
         def _inner(*args, **kwargs):
             return fn(*args, **kwargs)
+        if fn in DECORATED:
+            DECORATED.setdefault(_inner, DECORATED.pop(fn))
         if callable(limit_value):
             DECORATED.setdefault(_inner, []).append(
                 LimitWrapper(limit_value, key_function, None, per_method)
@@ -27,8 +29,8 @@ def limit(limit_value, key_function=None, per_method=False):
         else:
             DECORATED.setdefault(_inner, []).extend([
                 LimitWrapper(
-                    lim, key_function, None, per_method
-                ) for lim in parse_many(limit_value)
+                    list(parse_many(limit_value)), key_function, None, per_method
+                )
             ])
 
         return _inner
@@ -50,6 +52,8 @@ def shared_limit(limit_value, scope, key_function=None):
         def _inner(*args, **kwargs):
             return fn(*args, **kwargs)
 
+        if fn in DECORATED:
+            DECORATED.setdefault(_inner, DECORATED.pop(fn))
         if callable(limit_value):
             DECORATED.setdefault(_inner, []).append(
                 LimitWrapper(limit_value, key_function, scope)
@@ -57,8 +61,8 @@ def shared_limit(limit_value, scope, key_function=None):
         else:
             DECORATED.setdefault(_inner, []).extend([
                 LimitWrapper(
-                    lim, key_function, scope
-                ) for lim in parse_many(limit_value)
+                    list(parse_many(limit_value)), key_function, scope
+                )
             ])
         return _inner
     return __inner
