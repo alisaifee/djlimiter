@@ -112,7 +112,9 @@ class Limiter(object):
                     self.logger.info("Rate limit exceeded for %s (%s)", name, cur_limit)
                     failed_limit = cur_limit
                     limit_for_header = (cur_limit, (lim.key_func or self.key_function)(request), limit_scope)
-
+                    break
+            if failed_limit:
+                break
         request.view_rate_limit = limit_for_header
         if failed_limit:
             return self.callback(failed_limit)
