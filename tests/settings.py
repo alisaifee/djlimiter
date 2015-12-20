@@ -14,6 +14,8 @@ TEMPLATE_DIRS = ("tests/templates", )
 
 INSTALLED_APPS = (
     'django_nose',
+    'django.contrib.contenttypes',
+    'django.contrib.auth'
 )
 for dir in os.listdir("tests/apps"):
     if os.path.isfile("tests/apps/%s/urls.py" % dir):
