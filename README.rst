@@ -2,10 +2,10 @@
     :target: https://travis-ci.org/#!/alisaifee/djlimiter?branch=master
 .. |coveralls| image:: https://coveralls.io/repos/alisaifee/djlimiter/badge.png?branch=master
     :target: https://coveralls.io/r/alisaifee/djlimiter?branch=master
-.. |pypi| image:: https://pypip.in/v/djlimiter/badge.png
-    :target: https://crate.io/packages/djlimiter/
-.. |license| image:: https://pypip.in/license/djlimiter/badge.png
+.. |pypi| image:: https://img.shields.io/pypi/v/djlimiter.svg?style=flat-square
     :target: https://pypi.python.org/pypi/djlimiter/
+.. |license| image:: https://img.shields.io/pypi/l/djlimiter.svg?style=flat-square
+    :target: https://pypi.python.org/pypi/djlimiter
 
 *********
 djlimiter
