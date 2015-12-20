@@ -85,9 +85,8 @@ class Limiter(object):
         :return:
         """
         func = resolve(request.path).func
-        name = resolve(request.path).url_name if func else ""
+        name = resolve(request.path).view_name if func else ""
         limits = self.global_limits
-
         if (
             not self.enabled
             or func in EXEMPT
